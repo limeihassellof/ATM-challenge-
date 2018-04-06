@@ -1,4 +1,5 @@
 require 'date'
+require './lib/account.rb'
 
 class Atm
   attr_accessor :funds
@@ -13,20 +14,17 @@ class Atm
       { status: false,
         message: 'insufficient funds',
         date: Date.today }
-      when insufficient_funds_in_atm?(amount)
-        {status: false, message: 'insufficient funds in ATM',date: Date.today }
-      when incorrect_pin?(pin_code, account.pin_code)
-        { status: false, message: 'wrong pin', date: Date.today }
-      when card_expired?(account.exp_date)
-        { status: false, massage: 'card expired', date: Date.today }
+    when insufficient_funds_in_atm?(amount)
+      {status: false, message: 'insufficient funds in ATM',date: Date.today }
+    when incorrect_pin?(pin_code, account.pin_code)
+      { status: false, message: 'wrong pin', date: Date.today }
+    when card_expired?(account.exp_date)
+      { status: false, massage: 'card expired', date: Date.today }
     else
-        perform_transaction(amount, account)
+      perform_transaction(amount, account)
     end
-
-
   end
 
-end
 
 private
 
@@ -63,3 +61,4 @@ private
     def incorrect_pin?(pin_code, actual_pin)
       pin_code != actual_pin
     end
+end
